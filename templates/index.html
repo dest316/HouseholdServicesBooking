@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/static/CSS/style.css"/>
+	<title> Карточка читателя </title>
+	<!-- Создать макрос для вывода таблицы без ключевого столбца,
+	Параметры: имя таблицы, dataFrame с таблицей, имя ключевого столбца -->
+	{% macro render_table(table_name, relation) %}
+		<div class="innerBlock">
+        <p>
+            <b>{{table_name}} </b>
+        </p>
+        <!-- количество строк в таблице -->
+        {% set n = len(relation) %}
+        <table>
+            <!-- формируем заголовок таблицы (имена столбцов) -->
+            <tr>
+                {% for name in relation.dtypes.index %}
+                <th>{{name}}</th>
+                {% endfor %}
+            </tr>
+
+            <tbody>
+            <!-- для всех строк таблицы -->
+            {% for i in range(n) %}
+            <tr>
+                <!-- выводим значение каждого столбца -->
+                {% for name in relation.dtypes.index %}
+                <td> {{ relation.loc[i, service_type] }} </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+	{% endmacro %}
+
+	{% macro create_readers_list(combo_box) %}
+	<select name="reader">
+        {% set n = len(combo_box) %}
+        <!-- формируем строки списка (каждое значение поля
+        reader_name - строка списка) в виде
+        <option [selected] value = код_читателя> ФИО </option>
+        -->
+        {% for i in range(n) %}
+        {% set id_r = combo_box.loc[i, "service_id"] %}
+        <!-- атрибут value элемента будет совпадать с id читателя -->
+        {% if id_r == reader_id %}
+        <!-- если код читателя из таблицы совпадает с кодом
+        текущего читателя устанавливаем атрибут selected -->
+        <option selected value={{id_r}}>
+            {% else %}
+        <option value={{id_r}}>
+            {% endif %}
+            {{ combo_box.loc[i, "reader_name"] }}
+        </option>
+        {% endfor %}
+    </select>
+	{% endmacro %}
+
+	<!-- Вставить макрос для формирования поля со списком из ЛР 4 -->
+</head>
+<body>
+<div class="flex-row">
+<div>
+<form method="get">
+    <label for="myList">Выберите услуги:</label>
+    <select id="myList" name="selectedItems[]" multiple>
+        {% for i in range(combo_box|length) %}
+        <option value={{combo_box.loc[i, "service_id"]}}>{{combo_box.loc[i, "service_type"]}}</option>
+        {% endfor %}
+        <!-- Добавьте другие элементы списка по аналогии -->
+    </select>
+    <p>
+        <input type="submit" value="Рассчитать стоимость">
+    </p>
+</form>
+{% if selected_value or data_form1 %}
+    {% set prices = [] %}
+    {% if data_form1 %}
+    {% set selected_value = data_form1 %}
+    {% endif %}
+    {% for i in range(selected_value|length) %}
+        <p> {{combo_box.loc[int(selected_value[i]) - 1, "service_type"]}} {{combo_box.loc[int(selected_value[i]) - 1, "service_price"]}} + {{added_costs[i]}} </p>
+        {% set _ = prices.append(int(combo_box.loc[int(selected_value[i]) - 1, "service_price"]) + added_costs[i]) %}
+    {% endfor %}
+    <p>Сумма услуг: {{prices|sum}}</p>
+{% endif %}
+</div>
+<div>
+    <form method="get">
+        <label for="datepicker">Выберите дату приезда мастера:</label>
+        <input type="date" id="datepicker" name="selected_date">
+        <label for="timepicker">Выберите время приезда мастера</label>
+        <input type="number" id="timepicker" name="selected_time">
+        <p><input type="submit" value="Показать мастеров"></p>
+    </form>
+    {% if selected_date and masters_by_date is not none %}
+    <select name="free_masters">
+    {% for i in range(masters_by_date|length) %}
+        <option value={{masters_by_date.loc[i, "master_id"]}}>{{masters_by_date.loc[i, "master_personal_data"]}}</option>
+    {% endfor %}
+    </select>
+    {% endif %}
+</div>
+</div>
+</body>
+</html>

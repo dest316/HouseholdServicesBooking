@@ -1,0 +1,74 @@
+.menu {
+ background-color: #f1f1f1;
+ box-shadow: 4px 5px 10px rgba(0, 0, 0, 0.4);
+ width: 100%;
+}
+.menu li {
+ display: inline-block;
+ vertical-align: top;
+ padding: 10px;
+ color: #6f6d6d;
+}
+.menu a {
+ text-decoration: none;
+ color: #6f6d6d;
+ }
+.menu li:hover {
+ background-color: #f87777;
+ cursor: pointer;
+ color: #f8f8f8;
+}
+.menu ul {
+ padding: 0px;
+}
+.active{
+ background-color: #f87777;
+ color: #f8f8f8;
+}
+.active a:visited{
+ color: #f8f8f8;
+}
+.menu a:hover{
+ color: #f8f8f8;
+}
+.block {
+ padding: 10px 20px;
+}
+
+div {
+    display: flex;
+    flex-direction: column; /* Размещение блоков по горизонтали */
+    justify-content: space-around; /* Равномерное распределение блоков по горизонтали */
+    align-items: flex-start; /* Выравнивание блоков по верхнему краю */
+    flex-wrap: wrap; /* Обертывание на новую строку, если не хватает места */
+  }
+div.flex-row {
+    flex-direction: row
+}
+
+.innerBlock {
+    flex-direction: column;
+
+    margin-right: 3%;
+}
+  /* Стиль для внутренних таблиц */
+  div table {
+    border-collapse: collapse;
+    width: 100%; /* Задаем ширину таблицы (можно настроить под свои требования) */
+    margin-bottom: 20px; /* Отступ между таблицами и абзацами-подписями */
+  }
+
+  /* Стиль для ячеек таблицы */
+  div tr:nth-child(even) {
+    background-color: #f2f2f2; /* Светло-серый фон для четных строк */
+  }
+
+  div tr:nth-child(odd) {
+    background-color: #ffffff; /* Белый фон для нечетных строк */
+  }
+
+  div td, div th {
+    border: 1px solid #dddddd; /* Светло-серая граница для ячеек таблицы */
+    padding: 8px;
+    text-align: left;
+  }
