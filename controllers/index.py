@@ -29,7 +29,7 @@ def index():
     elif request.values.get('selected_date') and request.values.get('selected_time'):
         session['data_form2'] = request.args.get('selected_date')
         session['awaited_time'] = request.args.get('selected_time')
-        df_masters_by_date = get_masters_by_date(conn, session['data_form2'])
+        df_masters_by_date = get_masters_by_date(conn, session['data_form2'], session['awaited_time'])
         #print(session['data_form2'])
 
     # вошли первый раз
@@ -39,6 +39,7 @@ def index():
         session['data_form2'] = []
         session['masters'] = []
         session['added_costs'] = []
+        session['awaited_time'] = []
     # print(session['data_form1'])
     # df_book_reader = get_book_reader(conn, session['reader_id'])
 # выводим форму

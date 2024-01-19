@@ -8,8 +8,9 @@ def get_services(conn):
         ''', conn)
 
 
-def get_masters_by_date(conn, date):
-    return pandas.read_sql(f''' 
+def get_masters_by_date(conn, date, time):
+    return pandas.read_sql(f'''
+    WITH temp AS (
      SELECT *
 FROM masters m
 JOIN schedule s ON m.master_id = s.master_id
@@ -17,6 +18,9 @@ LEFT JOIN schedule_orders so ON s.shift_id = so.shift_id
 WHERE date = '{date}'
 GROUP BY s.shift_id
 HAVING COUNT(*) <= 4
+)
+SELECT * FROM temp
+WHERE order_datetime <> '{time}' OR order_datetime IS NULL
 ;''', conn)
 
 

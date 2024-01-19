@@ -92,16 +92,25 @@
         <p><label for="datepicker">Выберите дату приезда мастера:</label>
             <input type="date" id="datepicker" name="selected_date"></p>
         <p><label for="timepicker">Выберите время приезда мастера</label>
-            <input type="number" id="timepicker" name="selected_time"></p>
+            <input type="number" id="timepicker" name="selected_time" value="12"></p>
         <p><input type="submit" value="Показать мастеров"></p>
     </form>
     {% if selected_date and masters_by_date is not none %}
-    <select name="free_masters">
+    <form>
+    <p><select name="free_masters">
     {% for i in range(masters_by_date|length) %}
         <option value={{masters_by_date.loc[i, "master_id"]}}>{{masters_by_date.loc[i, "master_personal_data"]}}</option>
     {% endfor %}
-    </select>
+    </select></p>
+        <p><label for="phone_number">Номер телефона клиента:</label>
+            <input type="text" id="phone_number" name="phone_number"></p>
+        <p><label for="address">Адрес клиента:</label>
+            <input type="text" id="address" name="address"></p>
+        <p><label for="fio">Как обращаться к клиенту (опционально):</label>
+            <input type="text" id="fio" name="fio"></p>
+        <p><input type="submit" value="Создать заказ"></p>
     {% endif %}
+    </form>
 </div>
 </div>
 </body>
