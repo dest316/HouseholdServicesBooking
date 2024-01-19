@@ -26,8 +26,9 @@ def index():
         session['added_costs'] = added_costs
         # print(session['data_form1'])
 
-    elif request.values.get('selected_date'):
+    elif request.values.get('selected_date') and request.values.get('selected_time'):
         session['data_form2'] = request.args.get('selected_date')
+        session['awaited_time'] = request.args.get('selected_time')
         df_masters_by_date = get_masters_by_date(conn, session['data_form2'])
         #print(session['data_form2'])
 

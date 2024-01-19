@@ -9,11 +9,15 @@ def get_services(conn):
 
 
 def get_masters_by_date(conn, date):
-    return pandas.read_sql(
-        f'''
-        SELECT * FROM schedule JOIN masters USING (master_id) WHERE date = '{date}';
-        ''', conn
-    )
+    return pandas.read_sql(f''' 
+     SELECT *
+FROM masters m
+JOIN schedule s ON m.master_id = s.master_id
+LEFT JOIN schedule_orders so ON s.shift_id = so.shift_id
+WHERE date = '{date}'
+GROUP BY s.shift_id
+HAVING COUNT(*) <= 4
+;''', conn)
 
 
 def get_added_cost(conn, service_id):

@@ -2,7 +2,7 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="/static/CSS/style.css"/>
-	<title> Карточка читателя </title>
+	<title>Запись клиента</title>
 	<!-- Создать макрос для вывода таблицы без ключевого столбца,
 	Параметры: имя таблицы, dataFrame с таблицей, имя ключевого столбца -->
 	{% macro render_table(table_name, relation) %}
@@ -89,10 +89,10 @@
 </div>
 <div>
     <form method="get">
-        <label for="datepicker">Выберите дату приезда мастера:</label>
-        <input type="date" id="datepicker" name="selected_date">
-        <label for="timepicker">Выберите время приезда мастера</label>
-        <input type="number" id="timepicker" name="selected_time">
+        <p><label for="datepicker">Выберите дату приезда мастера:</label>
+            <input type="date" id="datepicker" name="selected_date"></p>
+        <p><label for="timepicker">Выберите время приезда мастера</label>
+            <input type="number" id="timepicker" name="selected_time"></p>
         <p><input type="submit" value="Показать мастеров"></p>
     </form>
     {% if selected_date and masters_by_date is not none %}
